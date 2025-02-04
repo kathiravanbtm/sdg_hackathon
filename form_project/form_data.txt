@@ -1,0 +1,24 @@
+Semester: 4
+CourseName: DISCRETE MATHEMATICS
+CourseCode: MA3401
+objective: gopal
+CourseDescription: The intial step of setting up a development environment is choosing the appropriate tool to complete the application setup. This application requires you to have a linux environment specifically an Ubuntu. However, if you are working out of a windows operating system during development we would recommend you use cloud9 Cloud9
+Prerequisites: The intial step of setting up a development environment is choosing the appropriate tool to complete the application setup. This application requires you to have a linux environment specifically an Ubuntu. However, if you are working out of a windows operating system during development we would recommend you use cloud9 Cloud9
+UnitIContent: 
+UnitIIContent: 
+UnitIIIContent: 
+UnitIVContent: 
+UnitVContent: 
+CourseFormat: 
+AssessmentsGrading: 
+CO1: 
+CO2: 
+CO3: 
+CO4: 
+CO5: 
+Textbook1: 
+Textbook2: 
+Textbook3: 
+Reference1: 
+Reference2: 
+Reference3: 

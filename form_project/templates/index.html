@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Document Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Course Details</h2>
+        <form id="courseForm">
+            <label>Semester: <input type="text" name="Semester" required></label><br>
+            <label>Course Name: <input type="text" name="CourseName" required></label><br>
+            <label>Course Code: <input type="text" name="CourseCode" required></label><br>
+
+            <h3>Course Objectives</h3>
+            <div id="objectiveFields">
+                <div class="objective-item">
+                    <input type="text" name="objective" placeholder="Enter Objective" required>
+                    <button type="button" class="remove-btn" onclick="removeObjective(this)">✖</button>
+                </div>
+            </div>
+            <button type="button" id="addObjective">+ Add Objective</button>
+
+            <h3>Course Description</h3>
+            <textarea name="CourseDescription" required></textarea>
+
+            <h3>Prerequisites</h3>
+            <textarea name="Prerequisites"></textarea>
+
+            <h3>Course Units</h3>
+            <textarea name="UnitIContent" placeholder="Unit I Content"></textarea>
+            <textarea name="UnitIIContent" placeholder="Unit II Content"></textarea>
+            <textarea name="UnitIIIContent" placeholder="Unit III Content"></textarea>
+            <textarea name="UnitIVContent" placeholder="Unit IV Content"></textarea>
+            <textarea name="UnitVContent" placeholder="Unit V Content"></textarea>
+
+            <h3>Course Format</h3>
+            <textarea name="CourseFormat"></textarea>
+
+            <h3>Assessments & Grading</h3>
+            <textarea name="AssessmentsGrading"></textarea>
+
+            <h3>Course Outcomes</h3>
+            <input type="text" name="CO1" placeholder="CO1">
+            <input type="text" name="CO2" placeholder="CO2">
+            <input type="text" name="CO3" placeholder="CO3">
+            <input type="text" name="CO4" placeholder="CO4">
+            <input type="text" name="CO5" placeholder="CO5">
+
+            <h3>Textbooks</h3>
+            <input type="text" name="Textbook1" placeholder="Textbook 1">
+            <input type="text" name="Textbook2" placeholder="Textbook 2">
+            <input type="text" name="Textbook3" placeholder="Textbook 3">
+
+            <h3>References</h3>
+            <input type="text" name="Reference1" placeholder="Reference 1">
+            <input type="text" name="Reference2" placeholder="Reference 2">
+            <input type="text" name="Reference3" placeholder="Reference 3">
+
+            <h3>Upload Custom Template (Optional)</h3>
+            <input type="file" name="TemplateFile" accept=".docx">
+
+            <button type="submit">Generate Document</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("addObjective").addEventListener("click", function () {
+            let objectivesDiv = document.getElementById("objectiveFields");
+            let newIndex = objectivesDiv.children.length + 1;
+
+            let div = document.createElement("div");
+            div.classList.add("objective-item");
+
+            let newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.name = "objective";  // Ensures Flask receives it as a list
+            newInput.placeholder = "Enter Objective " + newIndex;
+            newInput.required = true;
+
+            let removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.classList.add("remove-btn");
+            removeBtn.innerText = "✖";
+            removeBtn.onclick = function () { removeObjective(removeBtn); };
+
+            div.appendChild(newInput);
+            div.appendChild(removeBtn);
+            objectivesDiv.appendChild(div);
+        });
+
+        function removeObjective(button) {
+            button.parentElement.remove();
+        }
+
+        document.getElementById("courseForm").onsubmit = async function (event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/generate', { method: 'POST', body: formData });
+            let blob = await response.blob();
+            let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'Course_Objectives.docx';
+            link.click();
+        };
+    </script>
+</body>
+</html>
